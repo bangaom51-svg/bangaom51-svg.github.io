@@ -205,12 +205,12 @@ xrun -f run.f
 `xrun` compiles and elaborates every file listed in `run.f`. Two windows open:
 the **console** and the **design browser**.
 
+![Figure 1 — the Xcelium console](../assets/lab-1/fig1-xcelium-console.png)
+
 *Figure 1 — the Xcelium console.*
-<!-- drop the screenshot in assets/lab-1/ and swap the line above for:
-![Figure 1 — the Xcelium console](../assets/lab-1/fig1-xcelium-console.png) -->
+![Figure 2 — the design browser](../assets/lab-1/fig2-design-browser.png)
+
 *Figure 2 — the design browser, with the instance right-click menu.*
-<!-- drop the screenshot in assets/lab-1/ and swap the line above for:
-![Figure 2 — the design browser](../assets/lab-1/fig2-design-browser.png) -->
 
 **Step 3.** In the design browser, select `tb_addr_segregator_proc`. You will see
 the testbench hierarchy and its instances. Right-click any instance and choose
@@ -232,9 +232,9 @@ run 100ns
 
 The waveform viewer populates as the simulation advances.
 
+![Figure 3 — the waveform viewer after a full run](../assets/lab-1/fig3-waveform-viewer.png)
+
 *Figure 3 — the waveform viewer after a full run.*
-<!-- drop the screenshot in assets/lab-1/ and swap the line above for:
-![Figure 3 — the waveform viewer after a full run](../assets/lab-1/fig3-waveform-viewer.png) -->
 
 **Step 5.** Verify the DUT behaves as expected. The testbench as shipped drives
 three test cases; their correct outputs are:
@@ -251,9 +251,9 @@ zero even though `address` is non-zero.
 **Step 6.** Export the waveform database. Click **File → Export**, choose
 **All recorded variables**, and click **OK**.
 
+![Figure 4 — exporting the waveform database](../assets/lab-1/fig4-export-database.png)
+
 *Figure 4 — exporting the waveform database.*
-<!-- drop the screenshot in assets/lab-1/ and swap the line above for:
-![Figure 4 — exporting the waveform database](../assets/lab-1/fig4-export-database.png) -->
 
 **Step 7.** To reopen a saved waveform database later without rerunning the
 simulation:
@@ -265,9 +265,9 @@ simulation:
    hierarchy appear in the pane below; clicking a signal adds it to the waveform
    display.
 
+![Figure 5 — reopening a saved database in SimVision](../assets/lab-1/fig5-simvision-reopen.png)
+
 *Figure 5 — reopening a saved database in SimVision.*
-<!-- drop the screenshot in assets/lab-1/ and swap the line above for:
-![Figure 5 — reopening a saved database in SimVision](../assets/lab-1/fig5-simvision-reopen.png) -->
 
 ### Part 2 — Read the testbench
 
