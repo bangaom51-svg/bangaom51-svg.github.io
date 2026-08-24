@@ -1,0 +1,10 @@
+title: CSCE 616 / 700
+description: Introduction to Hardware Design Verification — Fall 2026
+theme: jekyll-theme-primer
+
+# Handouts are the authoritative version of each lab. Edits pushed here go
+# live within about a minute and reach every student, including those who
+# already accepted the assignment.
+
+exclude:
+  - README.md
