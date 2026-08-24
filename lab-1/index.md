@@ -1,20 +1,27 @@
 ---
+layout: lab
 title: "Lab 1 — Introduction to Cadence Simulation"
+lab_number: 1
+lab_title: "Introduction to Cadence Simulation"
+course: "CSCE 616 / 700 · Introduction to Hardware Design Verification"
+term: "Fall 2026"
+instructor: "David Kebo Houngninou"
+released: "Monday, August 24, 2026, 9:00 AM CT"
+due: "Monday, August 31, 2026, 11:59 PM CT"
+notice: >
+  This page is the authoritative version of the handout and may be corrected
+  after release. The copy in your assignment repository does not update. Check
+  the revision history at the bottom before you submit.
+description: "Compile, simulate and debug a cache address decoder with Cadence Xcelium, then turn a testbench that checks nothing into a self-checking one."
 ---
 
-# Lab 1 — Introduction to Cadence Simulation
+<nav class="toc" aria-labelledby="toc-heading" markdown="1">
+## On this page
+{: #toc-heading .toc__heading .no_toc}
 
-**CSCE 616 / 700 · Introduction to Hardware Design Verification**
-Fall 2026 · Instructor: David Kebo Houngninou
-
-Released: Monday, August 24, 2026, 9:00 AM CT
-**Due: Monday, August 31, 2026, 11:59 PM CT**
-
-> This page is the authoritative version of the handout and may be corrected
-> after release. The copy in your assignment repository does not update. Check
-> the [revision history](#revision-history) at the bottom before you submit.
-
----
+1. TOC
+{:toc}
+</nav>
 
 ## 1. Objectives
 
@@ -28,8 +35,6 @@ By the end of this lab you will be able to:
 6. Write a self-checking testbench that reports pass or fail on its own, without waveform inspection.
 7. Extend a directed test into a randomized regression, and explain what randomization finds that directed tests do not.
 8. Submit work by committing and pushing to your assignment repository.
-
----
 
 ## 2. Background
 
@@ -64,8 +69,6 @@ The field boundaries are parameterized. The default values are:
 | `tag_proc` | output | 12 | Extracted tag |
 | `index_proc` | output | 18 | Extracted index |
 | `blk_offset_proc` | output | 2 | Extracted block offset |
-
----
 
 ## 3. Environment setup
 
@@ -160,7 +163,7 @@ cd work
 
 The repository is organized as follows:
 
-| Directory | Contents |
+| Path | Contents |
 | --- | --- |
 | `work/design/common/` | Design files. For this lab, `addr_segregator_proc.sv`. |
 | `work/tb/` | Testbench files. For this lab, `tb_addr_segregator_proc.sv`. |
@@ -171,8 +174,6 @@ Simulation output — compiled libraries, logs, and waveform databases — is
 generated inside `work/sim/` when you run a simulation. These generated files are
 ignored by Git, with the exception of the waveform database you are asked to
 submit in section 6.
-
----
 
 ## 4. Walkthrough
 
@@ -205,18 +206,23 @@ xrun -f run.f
 `xrun` compiles and elaborates every file listed in `run.f`. Two windows open:
 the **console** and the **design browser**.
 
-![Figure 1 — the Xcelium console](../assets/lab-1/fig1-xcelium-console.png)
+<figure>
+  <img src="../assets/lab-1/fig1-xcelium-console.png"
+       alt="The Xcelium console window, showing the tool banner, elaboration messages, and an xcelium&gt; command prompt awaiting input.">
+  <figcaption>Figure 1 — the Xcelium console. This is where you type simulation commands and where <code>$display</code> and <code>$error</code> output appears.</figcaption>
+</figure>
 
-*Figure 1 — the Xcelium console.*
-![Figure 2 — the design browser](../assets/lab-1/fig2-design-browser.png)
-
-*Figure 2 — the design browser, with the instance right-click menu.*
+<figure>
+  <img src="../assets/lab-1/fig2-design-browser.png"
+       alt="The Xcelium design browser. The testbench hierarchy is listed on the left, an instance is right-clicked, and a context menu shows the Send to Waveform Window command.">
+  <figcaption>Figure 2 — the design browser, with the instance right-click menu open.</figcaption>
+</figure>
 
 **Step 3.** In the design browser, select `tb_addr_segregator_proc`. You will see
 the testbench hierarchy and its instances. Right-click any instance and choose
 **Send to Waveform Window** to add all of its signals to the waveform viewer. To
-add signals individually, select them in the **Object** pane on the right and
-send those instead.
+add signals individually, select them in the **Object** pane and send those
+instead.
 
 **Step 4.** In the console window, start the simulation. To run to completion:
 
@@ -232,9 +238,11 @@ run 100ns
 
 The waveform viewer populates as the simulation advances.
 
-![Figure 3 — the waveform viewer after a full run](../assets/lab-1/fig3-waveform-viewer.png)
-
-*Figure 3 — the waveform viewer after a full run.*
+<figure>
+  <img src="../assets/lab-1/fig3-waveform-viewer.png"
+       alt="The SimVision waveform viewer after a completed run, showing traces for cmd_rd, cmd_wr, address, tag_proc, index_proc and blk_offset_proc across the simulation window.">
+  <figcaption>Figure 3 — the waveform viewer after a full run.</figcaption>
+</figure>
 
 **Step 5.** Verify the DUT behaves as expected. The testbench as shipped drives
 three test cases; their correct outputs are:
@@ -249,11 +257,13 @@ Note that in the first case neither command is asserted, so all three outputs ar
 zero even though `address` is non-zero.
 
 **Step 6.** Export the waveform database. Click **File → Export**, choose
-**All recorded variables**, and click **OK**.
+**All recorded variables**, and confirm.
 
-![Figure 4 — exporting the waveform database](../assets/lab-1/fig4-export-database.png)
-
-*Figure 4 — exporting the waveform database.*
+<figure>
+  <img src="../assets/lab-1/fig4-export-database.png"
+       alt="The SimVision export dialog, with the All recorded variables option selected and the destination filename field visible.">
+  <figcaption>Figure 4 — exporting the waveform database.</figcaption>
+</figure>
 
 **Step 7.** To reopen a saved waveform database later without rerunning the
 simulation:
@@ -265,9 +275,11 @@ simulation:
    hierarchy appear in the pane below; clicking a signal adds it to the waveform
    display.
 
-![Figure 5 — reopening a saved database in SimVision](../assets/lab-1/fig5-simvision-reopen.png)
-
-*Figure 5 — reopening a saved database in SimVision.*
+<figure>
+  <img src="../assets/lab-1/fig5-simvision-reopen.png"
+       alt="SimVision after reopening a saved database, with the waves group expanded to reveal the tb_addr_segregator_proc hierarchy and its signal list.">
+  <figcaption>Figure 5 — reopening a saved database in SimVision.</figcaption>
+</figure>
 
 ### Part 2 — Read the testbench
 
@@ -299,8 +311,6 @@ You have already run this testbench in Part 1. It elaborated, drove the three
 directed cases, and finished at 30 ns having checked nothing at all. That is your
 starting point: a testbench that runs green and verifies nothing is exactly the
 failure mode this lab is about.
-
----
 
 ## 5. To-do
 
@@ -395,7 +405,13 @@ unreadable.
 ### Task 7 — Export the waveform database
 
 In the waveform viewer, click **File → Export**, choose **All recorded
-variables**, and save the database as `cache_waveform` inside `work/sim/`.
+variables**, and save the database into `work/sim/` with `cache_waveform` as the
+name.
+
+SimVision decides the extension itself, and depending on the version it may write
+a single file or a directory of them. Whatever it produces is fine as long as the
+name starts with `cache_waveform` and it lands in `work/sim/` — the `.gitignore`
+is already set up to keep it.
 
 ### Task 8 — Check your checker
 
@@ -448,6 +464,12 @@ share an accidental property: `0xFFFF0000`, `0xABCDDCBA`, `0xFEEDC0DE` and
 already equal changes nothing, so the fault is invisible to every vector you chose.
 It is wrong for half of all addresses — your five just were not among them.
 
+The 66 is not luck either. Of 200 random transactions, about two thirds assert a
+command, and about half of those carry an address whose bits 19 and 18 differ:
+200 × ⅔ × ½ ≈ 67. Randomization found this fault at exactly the rate the
+arithmetic predicts, which is the difference between a test that might work and a
+test whose yield you can reason about in advance.
+
 Nobody picked those addresses badly. They were picked to look varied, and they are
 varied. The property that mattered is one no reasonable person would have thought
 to vary, which is precisely the point: directed tests can only find the bugs you
@@ -468,8 +490,6 @@ Deliverable 1 is the design *unmodified*, and a submission whose own checker
 reports `FAIL` receives no credit for tasks 2 through 5. Confirm with `git diff`
 that the only file you changed is the testbench.
 
----
-
 ## 6. Deliverables
 
 Commit and push all of your changes to your assignment repository. Your repository
@@ -479,31 +499,28 @@ must contain:
 | --- | --- | --- |
 | 1 | `work/design/common/addr_segregator_proc.sv` | The design, unmodified |
 | 2 | `work/tb/tb_addr_segregator_proc.sv` | The completed testbench — directed cases 4 and 5, the expected-value model, `check_addr`, the randomized regression, and the summary |
-| 3 | `work/sim/cache_waveform` | The exported waveform database |
+| 3 | `work/sim/cache_waveform`… | The exported waveform database. Any extension SimVision gives it is accepted, as long as the name starts with `cache_waveform`. |
 | 4 | `cache_waveform.png` | The waveform image of the directed window, 0 to 120 ns |
 
 Your submitted testbench must end in `RESULT : PASS` with `checks_failed` at zero
 and `checks_run` at 205. Any other outcome means either the design or your checker
 is wrong, and both are your responsibility to find before you push.
 
-**File names are graded literally.** A file with the right contents under the wrong
-name receives no credit. Verify your submission by cloning your repository into a
-fresh directory and confirming all four items are present.
-
----
+**Names are graded literally** for items 1, 2 and 4 — a file with the right
+contents under the wrong name receives no credit. Item 3 is the one exception,
+because the exporter chooses its own extension. Verify your submission by cloning
+your repository into a fresh directory and confirming all four items are present.
 
 ## 7. Getting help
 
 - **Public questions** — post on the course Discord server. Most setup problems
   have already been answered there.
-- **Private questions** — email the instructor at davidkebo@tamu.edu.
+- **Private questions** — email the TA or the instructor.
 - **Office hours and help sessions** — see the syllabus for times.
 
 You may discuss this lab conceptually with classmates. The implementation you
 submit must be your own work. See the syllabus for the full collaboration and
 academic integrity policy.
-
----
 
 ## Revision history
 
@@ -511,4 +528,5 @@ Changes made to this handout after release are listed here, newest first.
 
 | Date | Change |
 | --- | --- |
+| Aug 24, 2026 | Task 7 and deliverable 3 now accept whatever extension SimVision gives the exported database. Added the arithmetic behind the 66 failures in Task 8. |
 | Aug 24, 2026 | Initial release for Fall 2026. |

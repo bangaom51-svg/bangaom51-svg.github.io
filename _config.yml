@@ -1,10 +1,24 @@
 title: CSCE 616 / 700
 description: Introduction to Hardware Design Verification — Fall 2026
-theme: jekyll-theme-primer
+lang: en
 
-# Handouts are the authoritative version of each lab. Edits pushed here go
-# live within about a minute and reach every student, including those who
-# already accepted the assignment.
+# No remote theme. Layouts in _layouts/ and the design tokens in
+# assets/css/main.css are the whole design system - keeping it local means
+# a GitHub Pages build cannot silently restyle a handout.
+
+markdown: kramdown
+kramdown:
+  auto_ids: true          # stable heading anchors for deep links
+  toc_levels: 2..3        # section + subsection only; task lists stay out of the TOC
+  syntax_highlighter: rouge
+
+sass:
+  style: compressed
 
 exclude:
   - README.md
+  - LAB-TEMPLATE.md
+  - tools
+  - Gemfile
+  - Gemfile.lock
+  - vendor
